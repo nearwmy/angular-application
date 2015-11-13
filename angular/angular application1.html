@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angular application of listMenu</title>
+	<style type="text/css">
+		body,html {
+			font-size: 10px;
+			background-color: #EDF0F4;
+			font-size: '微软雅黑';
+		}
+		body,html,ul,form,li,p {
+			margin: 0;
+			padding: 0;
+		}
+		#main{
+			width: 600px;
+			height: 700px;
+			position: absolute;
+			top:50%;
+			left:50%;
+			margin-left: -300px;
+			margin-top: -350px;
+			background-color: #fff;
+			text-align: center;
+			border-radius: 10px;
+			border:1px #E4E7EA solid;
+		}
+		#main h1{
+			color:#999;
+			font-size: 3rem;
+			text-transform: uppercase;
+		}
+		#services li {
+			list-style: none;
+			height: 50px;
+			line-height: 50px;
+			font-size: 2rem;
+			text-align: left;
+			margin:10px 50px;
+			padding: 0 10px;
+			background-color: #FBFBFC;
+			border-radius: 5px;
+			border-bottom:1px #F6F6F6 solid
+
+		}
+		#services{
+			margin-top: 50px
+		}
+		#services li label {
+			display: block;
+		}
+		#services li label span {
+			display: inline-block;
+			float: right;
+			color:#ccc;
+		}
+		#total {
+			color:#95C4E8;
+			font-size: 2rem;
+			line-height: 50px;
+			font-weight: bolder;
+			text-align: right;
+			padding: 0 50px;
+		}
+		#order {
+			width: 200px;
+			height: 50px;
+			background-color:#95C4E8;
+			color:#fff;
+			font-weight: bolder;
+			border:none;
+			border-radius: 5px;
+			font-size: 2rem;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<form id="main" ng-app='priceMenu' ng-controller="listChoice">
+		<h1>My Services</h1>
+
+		<ul id="services">
+			<!-- The services will be inserted here -->
+			<li ng-repeat="service in services">
+				<!-- list will be created here -->
+				<label>
+					<input type="checkbox" ng-model="service.selected" value="1" name="{{service.title}}" />
+					{{service.title}}
+					<span>${{service.price}}</span>
+				</label>
+			</li>
+		</ul>
+		<!-- the function of total -->
+		<p id="total">
+			total:
+			<span>${{total()}}</span>
+		</p>
+
+		<input type="submit" id="order" value="Submit" ng-click='submit()'/>
+
+	</form>
+
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	<script type="text/javascript">
+		var app=angular.module('priceMenu',[]);
+		app.controller('listChoice',function($scope){
+			$scope.services=[
+				{title:'web scoket1',price:200},
+				{title:'web scoket2',price:50.5},
+				{title:'web scoket3',price:200},
+				{title:'web scoket4',price:100}
+			];
+			$scope.total=function(i){
+					var i=0;
+					angular.forEach($scope.services,function(s){
+						if(s.selected)
+							i+=s.price;
+					});
+					return i;
+			}
+			$scope.submit=function(){
+				var i=$scope.total(i);
+				if(i!=0){
+					alert(i);
+				}else
+				alert('please choose at least one');
+			}
+		})
+	</script>
+</body>
+</html>
